@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  coq_server:
+  coq_server_double_negation:
     build: .
     ports:
       - "12345:12345"
@@ -10,6 +10,54 @@ services:
     environment:
       - HOST=0.0.0.0
       - PORT=12345
+    command: python3 /app/server.py
+    restart: unless-stopped
+
+  coq_server_identity_function:
+    build: .
+    ports:
+      - "12346:12346"
+    volumes:
+      - ./server:/app
+    environment:
+      - HOST=0.0.0.0
+      - PORT=12346
+    command: python3 /app/server.py
+    restart: unless-stopped
+
+  coq_server_add_zero:
+    build: .
+    ports:
+      - "12347:12347"
+    volumes:
+      - ./server:/app
+    environment:
+      - HOST=0.0.0.0
+      - PORT=12347
+    command: python3 /app/server.py
+    restart: unless-stopped
+
+  coq_server_app_nil_r:
+    build: .
+    ports:
+      - "12348:12348"
+    volumes:
+      - ./server:/app
+    environment:
+      - HOST=0.0.0.0
+      - PORT=12348
+    command: python3 /app/server.py
+    restart: unless-stopped
+
+  coq_server_negb_involutive:
+    build: .
+    ports:
+      - "12349:12349"
+    volumes:
+      - ./server:/app
+    environment:
+      - HOST=0.0.0.0
+      - PORT=12349
     command: python3 /app/server.py
     restart: unless-stopped
 
