@@ -2,27 +2,32 @@ import socket
 import subprocess
 import os
 
-# Theorems and ports
+# Theorems, ports, and flags
 theorems = {
     12345: {
         'statement': "Theorem double_negation : forall P : Prop, P -> ~~P.",
-        'file_name': "double_negation.v"
+        'file_name': "double_negation.v",
+        'flag': "CTF{d0uble_n3gation_pr00f}"
     },
     12346: {
         'statement': "Theorem identity_function : forall (A : Type) (x : A), x = x.",
-        'file_name': "identity_function.v"
+        'file_name': "identity_function.v",
+        'flag': "CTF{id3ntity_funCti0n_pr00f}"
     },
     12347: {
         'statement': "Theorem add_zero : forall n : nat, n + 0 = n.",
-        'file_name': "add_zero.v"
+        'file_name': "add_zero.v",
+        'flag': "CTF{additi0n_with_z3r0_pr00f}"
     },
     12348: {
         'statement': "Theorem app_nil_r : forall (A : Type) (l : list A), l ++ [] = l.",
-        'file_name': "app_nil_r.v"
+        'file_name': "app_nil_r.v",
+        'flag': "CTF{app_n1l_r_pr00f}"
     },
     12349: {
         'statement': "Theorem negb_involutive : forall b : bool, negb (negb b) = b.",
-        'file_name': "negb_involutive.v"
+        'file_name': "negb_involutive.v",
+        'flag': "CTF{n3gb_involut1ve_pr00f}"
     }
 }
 
@@ -61,6 +66,7 @@ def handle_client(client_socket, theorem_info):
     """Handle incoming client connections."""
     theorem_statement = theorem_info['statement']
     file_name = theorem_info['file_name']
+    flag = theorem_info['flag']
 
     try:
         with client_socket:
@@ -77,6 +83,8 @@ def handle_client(client_socket, theorem_info):
                 proof_file.write(proof_data)
             
             result = verify_proof(file_name)
+            if "Proof is valid!" in result:
+                result += f"Congratulations! Here is your flag: {flag}\n"
             client_socket.sendall(result.encode('utf-8'))
     finally:
         # Clean up proof file after verification
