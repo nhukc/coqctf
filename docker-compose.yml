@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  coq_server:
+    build: .
+    ports:
+      - "12345:12345"
+    volumes:
+      - ./server:/app
+    environment:
+      - HOST=0.0.0.0
+      - PORT=12345
+    command: python3 /app/server.py
+    restart: unless-stopped
+
